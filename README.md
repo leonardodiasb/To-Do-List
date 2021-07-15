@@ -4,8 +4,14 @@ This is my To-Do-List page. On this page you can write down a list of activities
 
 This page is the first project I am doing using Webpack.
 
-## Live Demo
-https://leonardodiasb.github.io/To-Do-List/
+![screenshot](src/images/Screenshot.png)
+
+## Project Setup
+
+- Clone this repository (use this SSH key git@github.com:leonardodiasb/To-Do-List.git).
+- Open the folder project (To-Do-List).
+- Install all dependencies with "npm install" in the command line.
+- Run the project with "npm start" and the project will load automatically in your default browser
 
 ## Built With
 
