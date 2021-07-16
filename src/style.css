@@ -47,13 +47,17 @@ h1 {
 
 #icon-arrows-ccw {
   width: 20px;
+  cursor: pointer;
+}
+
+.delete-line {
+  cursor: move;
 }
 
 #icon-arrows-ccw,
 .delete-line {
   opacity: 0.5;
   padding-right: 1rem;
-  cursor: pointer;
 }
 
 .enter-icon {
@@ -76,6 +80,10 @@ h1 {
   display: flex;
   align-items: center;
   border-bottom: 1px solid #f1f1f1;
+}
+
+.td-item.dragging {
+  opacity: .5;
 }
 
 .td-item:last-child {

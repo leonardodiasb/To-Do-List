@@ -1,18 +1,17 @@
 import './style.css';
 import Icon from './images/enter-icon.png';
+import Status from './status.js';
+import DragDropSort from './drag.js';
 
-const tdList = [
-  {
-    description: 'wash the dishes',
-    completed: false,
-    index: 0,
-  },
-  {
-    description: 'complete To Do List project',
-    completed: true,
-    index: 1,
-  },
-];
+const tdListStored = JSON.parse(localStorage.getItem('ToDoList'));
+let tdList = tdListStored;
+if (tdList == null) {
+  tdList = [
+    {description: "complete To Do List project", completed: true, index: "0"},
+    {description: "wash the dishes", completed: true, index: "1"},
+    {description: "rest", completed: true, index: "2"}]
+};
+export default tdList;
 
 const list = document.getElementById('td-section');
 const inputLine = document.getElementById('input-line');
@@ -22,15 +21,15 @@ function populate() {
   for (let i = 0; i < tdList.length; i += 1) {
     if (tdList[i].completed) {
       list.insertAdjacentHTML('beforeend',
-        `<div class="td-item">
-            <input type="checkbox" checked>
+        `<div class="td-item" id="${tdList[i].index}" draggable="true">
+            <input type="checkbox" class="checkbox" checked="checked"/>
             <p>${tdList[i].description}</p>
             <i class="delete-line fas fa-ellipsis-v"></i>
         </div>`);
     } else {
       list.insertAdjacentHTML('beforeend',
-        `<div class="td-item">
-            <input type="checkbox">
+        `<div class="td-item" id="${tdList[i].index}" draggable="true">
+            <input type="checkbox" class="checkbox"/>
             <p>${tdList[i].description}</p>
             <i class="delete-line fas fa-ellipsis-v"></i>
         </div>`);
@@ -39,3 +38,32 @@ function populate() {
 }
 
 document.addEventListener('DOMContentLoaded', populate);
+
+list.addEventListener("change", (e) => { //this will be the validation method
+    if(e.target.classList.contains('checkbox')) {
+      const status = new Status();
+      status.validation(e);
+  }
+});
+
+function loadLiEvents () {
+  const draggables = document.querySelectorAll('.td-item');
+  const container = document.querySelector('#td-section');
+  const drag = new DragDropSort();
+  
+  draggables.forEach(draggable => {
+    draggable.addEventListener('dragstart', () => {
+      draggable.classList.add('dragging');
+    })
+
+    draggable.addEventListener('dragend', () => {
+      draggable.classList.remove('dragging');
+    })
+  });
+
+  container.addEventListener('dragover', drag.dragOver);
+
+  container.addEventListener('drop', drag.dropSort);
+}
+
+document.addEventListener('DOMContentLoaded', loadLiEvents);
