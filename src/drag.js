@@ -24,7 +24,7 @@ export default class DragDropSort {
 
   dropSort = (e) => {
     e.preventDefault();
-    const array = e.target.parentNode.parentNode.childNodes;
+    const array = document.getElementById('td-section').childNodes;
     const len = array.length;
     const tdList = JSON.parse(localStorage.getItem('ToDoList'));
     for (let h = 0; h < len; h += 1) {

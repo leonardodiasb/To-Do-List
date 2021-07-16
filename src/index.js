@@ -47,7 +47,6 @@ list.addEventListener('change', (e) => { // this will be the validation method
 
 function loadLiEvents() {
   const draggables = document.querySelectorAll('.td-item');
-  const container = document.querySelector('#td-section');
   const drag = new DragDropSort();
 
   draggables.forEach((draggable) => {
@@ -60,9 +59,9 @@ function loadLiEvents() {
     });
   });
 
-  container.addEventListener('dragover', drag.dragOver);
+  document.addEventListener('dragover', drag.dragOver);
 
-  container.addEventListener('drop', drag.dropSort);
+  document.addEventListener('drop', drag.dropSort);
 }
 
 document.addEventListener('DOMContentLoaded', loadLiEvents);
