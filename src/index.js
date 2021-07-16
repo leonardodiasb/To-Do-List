@@ -7,11 +7,10 @@ const tdListStored = JSON.parse(localStorage.getItem('ToDoList'));
 let tdList = tdListStored;
 if (tdList == null) {
   tdList = [
-    {description: "complete To Do List project", completed: true, index: "0"},
-    {description: "wash the dishes", completed: true, index: "1"},
-    {description: "rest", completed: true, index: "2"}]
-};
-export default tdList;
+    { description: 'complete To Do List project', completed: true, index: '0' },
+    { description: 'wash the dishes', completed: true, index: '1' },
+    { description: 'rest', completed: true, index: '2' }];
+}
 
 const list = document.getElementById('td-section');
 const inputLine = document.getElementById('input-line');
@@ -39,26 +38,26 @@ function populate() {
 
 document.addEventListener('DOMContentLoaded', populate);
 
-list.addEventListener("change", (e) => { //this will be the validation method
-    if(e.target.classList.contains('checkbox')) {
-      const status = new Status();
-      status.validation(e);
+list.addEventListener('change', (e) => { // this will be the validation method
+  if (e.target.classList.contains('checkbox')) {
+    const status = new Status();
+    status.validation(e);
   }
 });
 
-function loadLiEvents () {
+function loadLiEvents() {
   const draggables = document.querySelectorAll('.td-item');
   const container = document.querySelector('#td-section');
   const drag = new DragDropSort();
-  
-  draggables.forEach(draggable => {
+
+  draggables.forEach((draggable) => {
     draggable.addEventListener('dragstart', () => {
       draggable.classList.add('dragging');
-    })
+    });
 
     draggable.addEventListener('dragend', () => {
       draggable.classList.remove('dragging');
-    })
+    });
   });
 
   container.addEventListener('dragover', drag.dragOver);
