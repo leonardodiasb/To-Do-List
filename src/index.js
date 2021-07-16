@@ -5,12 +5,13 @@ import DragDropSort from './drag.js';
 
 const tdListStored = JSON.parse(localStorage.getItem('ToDoList'));
 let tdList = tdListStored;
-if (tdList == null) {
+if (tdList === null) {
   tdList = [
     { description: 'complete To Do List project', completed: true, index: '0' },
     { description: 'wash the dishes', completed: true, index: '1' },
     { description: 'rest', completed: true, index: '2' }];
 }
+localStorage.setItem('ToDoList', JSON.stringify(tdList));
 
 const list = document.getElementById('td-section');
 const inputLine = document.getElementById('input-line');
