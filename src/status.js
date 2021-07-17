@@ -2,10 +2,10 @@ export default class Status {
   validation(e) {
     const tdList = JSON.parse(localStorage.getItem('ToDoList'));
     const itemIndex = e.target.parentNode.id;
-    if (tdList[itemIndex-1].completed) {
-      tdList[itemIndex-1].completed = false;
+    if (tdList[itemIndex - 1].completed) {
+      tdList[itemIndex - 1].completed = false;
     } else {
-      tdList[itemIndex-1].completed = true;
+      tdList[itemIndex - 1].completed = true;
     }
     this.saveStorage();
   }
@@ -17,7 +17,7 @@ export default class Status {
       newList.push({
         description: listToStore[i].firstChild.nextSibling.nextSibling.nextSibling.innerHTML,
         completed: listToStore[i].firstChild.nextSibling.checked,
-        index: i+1,
+        index: i + 1,
       });
     }
     localStorage.setItem('ToDoList', JSON.stringify(newList));

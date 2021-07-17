@@ -42,14 +42,14 @@ export default class AddRm {
   clearCompleted = () => {
     const itemToRemove = document.querySelectorAll('.td-item');
     const item = Array.prototype.slice.call(itemToRemove);
-    const checked = item.filter(item => !item.firstChild.nextSibling.checked);
+    const checked = item.filter((item) => !item.firstChild.nextSibling.checked);
     const newList = [];
     for (let i = 0; i < checked.length; i += 1) {
       newList.push({
         description: checked[i].childNodes[3].innerText,
         completed: false,
-        index: i+1,
-      })
+        index: i + 1,
+      });
     }
     localStorage.setItem('ToDoList', JSON.stringify(newList));
     window.location.reload();
@@ -59,7 +59,7 @@ export default class AddRm {
     const tdListStored = JSON.parse(localStorage.getItem('ToDoList'));
     if (e.key === 'Enter') {
       e.preventDefault();
-      tdListStored[e.target.parentNode.id].description = e.target.innerText;
+      tdListStored[e.target.parentNode.id - 1].description = e.target.innerText;
       status.saveStorage();
     }
   }
