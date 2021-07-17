@@ -69,7 +69,7 @@ export default class AddRm {
     const len = tdListStored.length;
     const htmlItems = document.querySelectorAll('.td-item');
     for (let i = 0; i < len; i += 1) {
-      if (Number(htmlItems[i].id) === tdListStored[e.target.parentNode.id].index) {
+      if (Number(htmlItems[i].id) === tdListStored[e.target.parentNode.id - 1].index) {
         htmlItems[i].remove();
       }
     }
