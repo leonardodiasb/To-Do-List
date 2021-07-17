@@ -1,5 +1,4 @@
 import Status from './status.js';
-import DragDropSort from './drag.js';
 
 const status = new Status();
 
@@ -35,29 +34,7 @@ export default class AddRm {
                                         <i class="drag-line fas fa-ellipsis-v"></i>
                                     </div>`);
       }
-      const draggables = document.querySelectorAll('.td-item');
-      const drag = new DragDropSort();
-      draggables.forEach((draggable) => {
-        draggable.addEventListener('dragstart', () => {
-          draggable.classList.add('dragging');
-        });
-        
-        draggable.addEventListener('dragend', () => {
-          draggable.classList.remove('dragging');
-        });
-        
-        draggable.addEventListener('keypress', this.editText)
-      });
-      
-      const rmvLine = document.querySelectorAll('.delete-line');
-      rmvLine.forEach((rmv) => {
-        rmv.addEventListener('click', this.removeLine);
-      })
-
-      document.addEventListener('dragover', drag.dragOver);
-
-      document.addEventListener('drop', drag.dropSort);
-      event.target.value = '';
+      window.location.reload();
     }
     status.saveStorage();
   }
@@ -71,15 +48,13 @@ export default class AddRm {
       }
     }
     status.saveStorage();
-    status.populate();
+    window.location.reload();
   }
 
   editText = (e) => {
     const tdListStored = JSON.parse(localStorage.getItem('ToDoList'));
-    if(e.key === "Enter") {
+    if (e.key === 'Enter') {
       e.preventDefault();
-      console.log(e.target.innerText);
-      console.log(tdListStored[e.target.parentNode.id].description)
       tdListStored[e.target.parentNode.id].description = e.target.innerText;
       status.saveStorage();
     }
@@ -90,7 +65,7 @@ export default class AddRm {
     const len = tdListStored.length;
     const htmlItems = document.querySelectorAll('.td-item');
     for (let i = 0; i < len; i += 1) {
-      if(htmlItems[i].id == tdListStored[e.target.parentNode.id].index) {
+      if (Number(htmlItems[i].id) === tdListStored[e.target.parentNode.id].index) {
         htmlItems[i].remove();
       }
     }

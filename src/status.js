@@ -1,5 +1,3 @@
-import DragDropSort from './drag.js';
-
 export default class Status {
   validation(e) {
     const tdList = JSON.parse(localStorage.getItem('ToDoList'));
@@ -29,7 +27,6 @@ export default class Status {
     const tdListStored = JSON.parse(localStorage.getItem('ToDoList'));
     const tdList = tdListStored;
     const list = document.getElementById('td-section');
-    list.innerHTML = '';
     for (let i = 0; i < tdList.length; i += 1) {
       if (tdList[i].completed) {
         list.insertAdjacentHTML('beforeend',
@@ -49,20 +46,5 @@ export default class Status {
             </div>`);
       }
     }
-    const draggables = document.querySelectorAll('.td-item');
-      const drag = new DragDropSort();
-      draggables.forEach((draggable) => {
-        draggable.addEventListener('dragstart', () => {
-          draggable.classList.add('dragging');
-        });
-
-        draggable.addEventListener('dragend', () => {
-          draggable.classList.remove('dragging');
-        });
-      });
-
-      document.addEventListener('dragover', drag.dragOver);
-
-      document.addEventListener('drop', drag.dropSort);
   }
 }

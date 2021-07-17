@@ -18,6 +18,7 @@ list.addEventListener('change', (e) => {
   }
 });
 
+const addrm = new AddRm();
 function loadLiEvents() {
   const draggables = document.querySelectorAll('.td-item');
   const drag = new DragDropSort();
@@ -25,18 +26,18 @@ function loadLiEvents() {
     draggable.addEventListener('dragstart', () => {
       draggable.classList.add('dragging');
     });
-    
+
     draggable.addEventListener('dragend', () => {
       draggable.classList.remove('dragging');
     });
-    
+
     draggable.addEventListener('keypress', addrm.editText);
   });
-  
+
   const rmvLine = document.querySelectorAll('.delete-line');
   rmvLine.forEach((rmv) => {
     rmv.addEventListener('click', addrm.removeLine);
-  })
+  });
 
   document.addEventListener('dragover', drag.dragOver);
 
@@ -45,9 +46,7 @@ function loadLiEvents() {
 
 document.addEventListener('DOMContentLoaded', loadLiEvents);
 
-const addrm = new AddRm();
 const inpt = document.getElementById('inpt');
 inpt.addEventListener('keypress', addrm.addToList);
 const rmvBtn = document.getElementById('remove-btn');
 rmvBtn.addEventListener('click', addrm.clearCompleted);
-
