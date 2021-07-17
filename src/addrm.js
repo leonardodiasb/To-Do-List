@@ -1,5 +1,4 @@
 import Status from './status.js';
-import DragDropSort from './drag.js';
 
 const status = new Status();
 
@@ -12,13 +11,14 @@ export default class AddRm {
         tdList.push({
           description: event.target.value,
           completed: false,
-          index: 0,
+          index: 1,
         });
         list.insertAdjacentHTML('beforeend',
-          `<div class="td-item" id="${0}" draggable="true">
+          `<div class="td-item" id="${1}" draggable="true">
                         <input type="checkbox" class="checkbox"/>
-                        <p>${event.target.value}</p>
-                        <i class="delete-line fas fa-ellipsis-v"></i>
+                        <p contenteditable="true">${event.target.value}</p>
+                        <i class="delete-line me-2 far fa-trash-alt" id="remove"></i>
+                        <i class="drag-line fas fa-ellipsis-v"></i>
                     </div>`);
       } else {
         tdList.push({
@@ -29,38 +29,51 @@ export default class AddRm {
         list.insertAdjacentHTML('beforeend',
           `<div class="td-item" id="${Number(list.lastChild.id) + 1}" draggable="true">
                                         <input type="checkbox" class="checkbox"/>
-                                        <p>${event.target.value}</p>
-                                        <i class="delete-line fas fa-ellipsis-v"></i>
+                                        <p contenteditable="true">${event.target.value}</p>
+                                        <i class="delete-line me-2 far fa-trash-alt" id="remove"></i>
+                                        <i class="drag-line fas fa-ellipsis-v"></i>
                                     </div>`);
       }
-      const draggables = document.querySelectorAll('.td-item');
-      const drag = new DragDropSort();
-      draggables.forEach((draggable) => {
-        draggable.addEventListener('dragstart', () => {
-          draggable.classList.add('dragging');
-        });
-
-        draggable.addEventListener('dragend', () => {
-          draggable.classList.remove('dragging');
-        });
-      });
-
-      document.addEventListener('dragover', drag.dragOver);
-
-      document.addEventListener('drop', drag.dropSort);
+      window.location.reload();
     }
     status.saveStorage();
   }
 
   clearCompleted = () => {
     const itemToRemove = document.querySelectorAll('.td-item');
-    const len = itemToRemove.length;
+    const item = Array.prototype.slice.call(itemToRemove);
+    const checked = item.filter((item) => !item.firstChild.nextSibling.checked);
+    const newList = [];
+    for (let i = 0; i < checked.length; i += 1) {
+      newList.push({
+        description: checked[i].childNodes[3].innerText,
+        completed: false,
+        index: i + 1,
+      });
+    }
+    localStorage.setItem('ToDoList', JSON.stringify(newList));
+    window.location.reload();
+  }
+
+  editText = (e) => {
+    const tdListStored = JSON.parse(localStorage.getItem('ToDoList'));
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      tdListStored[e.target.parentNode.id - 1].description = e.target.innerText;
+      status.saveStorage();
+    }
+  }
+
+  removeLine = (e) => {
+    const tdListStored = JSON.parse(localStorage.getItem('ToDoList'));
+    const len = tdListStored.length;
+    const htmlItems = document.querySelectorAll('.td-item');
     for (let i = 0; i < len; i += 1) {
-      if (itemToRemove[i].firstChild.nextSibling.checked) {
-        itemToRemove[i].remove();
+      if (Number(htmlItems[i].id) === tdListStored[e.target.parentNode.id - 1].index) {
+        htmlItems[i].remove();
       }
     }
     status.saveStorage();
-    status.populate();
+    window.location.reload();
   }
 }

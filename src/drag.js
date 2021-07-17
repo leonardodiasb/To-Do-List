@@ -28,7 +28,7 @@ export default class DragDropSort {
     const len = array.length;
     const tdList = JSON.parse(localStorage.getItem('ToDoList'));
     for (let h = 0; h < len; h += 1) {
-      array[h].id = h;
+      array[h].id = h + 1;
       for (let y = 0; y < len; y += 1) {
         const text = array[h].firstChild.nextSibling.nextSibling.nextSibling.innerHTML;
         if (text === tdList[y].description) {

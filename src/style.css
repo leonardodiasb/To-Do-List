@@ -50,14 +50,20 @@ h1 {
   cursor: pointer;
 }
 
-.delete-line {
+.drag-line {
   cursor: move;
 }
 
-#icon-arrows-ccw,
 .delete-line {
   opacity: 0.5;
-  padding-right: 1rem;
+  cursor: pointer;
+  padding: 0.3rem;
+}
+
+#icon-arrows-ccw,
+.drag-line {
+  opacity: 0.5;
+  padding: 0.2rem 1rem;
 }
 
 .enter-icon {
