@@ -11,10 +11,10 @@ export default class AddRm {
         tdList.push({
           description: event.target.value,
           completed: false,
-          index: 0,
+          index: 1,
         });
         list.insertAdjacentHTML('beforeend',
-          `<div class="td-item" id="${0}" draggable="true">
+          `<div class="td-item" id="${1}" draggable="true">
                         <input type="checkbox" class="checkbox"/>
                         <p contenteditable="true">${event.target.value}</p>
                         <i class="delete-line me-2 far fa-trash-alt" id="remove"></i>
@@ -41,13 +41,17 @@ export default class AddRm {
 
   clearCompleted = () => {
     const itemToRemove = document.querySelectorAll('.td-item');
-    const len = itemToRemove.length;
-    for (let i = 0; i < len; i += 1) {
-      if (itemToRemove[i].firstChild.nextSibling.checked) {
-        itemToRemove[i].remove();
-      }
+    const item = Array.prototype.slice.call(itemToRemove);
+    const checked = item.filter(item => !item.firstChild.nextSibling.checked);
+    const newList = [];
+    for (let i = 0; i < checked.length; i += 1) {
+      newList.push({
+        description: checked[i].childNodes[3].innerText,
+        completed: false,
+        index: i+1,
+      })
     }
-    status.saveStorage();
+    localStorage.setItem('ToDoList', JSON.stringify(newList));
     window.location.reload();
   }
 
