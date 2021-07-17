@@ -17,8 +17,9 @@ export default class AddRm {
         list.insertAdjacentHTML('beforeend',
           `<div class="td-item" id="${0}" draggable="true">
                         <input type="checkbox" class="checkbox"/>
-                        <p>${event.target.value}</p>
-                        <i class="delete-line fas fa-ellipsis-v"></i>
+                        <p contenteditable="true">${event.target.value}</p>
+                        <i class="delete-line me-2 far fa-trash-alt" id="remove"></i>
+                        <i class="drag-line fas fa-ellipsis-v"></i>
                     </div>`);
       } else {
         tdList.push({
@@ -29,8 +30,9 @@ export default class AddRm {
         list.insertAdjacentHTML('beforeend',
           `<div class="td-item" id="${Number(list.lastChild.id) + 1}" draggable="true">
                                         <input type="checkbox" class="checkbox"/>
-                                        <p>${event.target.value}</p>
-                                        <i class="delete-line fas fa-ellipsis-v"></i>
+                                        <p contenteditable="true">${event.target.value}</p>
+                                        <i class="delete-line me-2 far fa-trash-alt" id="remove"></i>
+                                        <i class="drag-line fas fa-ellipsis-v"></i>
                                     </div>`);
       }
       const draggables = document.querySelectorAll('.td-item');
@@ -39,15 +41,23 @@ export default class AddRm {
         draggable.addEventListener('dragstart', () => {
           draggable.classList.add('dragging');
         });
-
+        
         draggable.addEventListener('dragend', () => {
           draggable.classList.remove('dragging');
         });
+        
+        draggable.addEventListener('keypress', this.editText)
       });
+      
+      const rmvLine = document.querySelectorAll('.delete-line');
+      rmvLine.forEach((rmv) => {
+        rmv.addEventListener('click', this.removeLine);
+      })
 
       document.addEventListener('dragover', drag.dragOver);
 
       document.addEventListener('drop', drag.dropSort);
+      event.target.value = '';
     }
     status.saveStorage();
   }
@@ -62,5 +72,29 @@ export default class AddRm {
     }
     status.saveStorage();
     status.populate();
+  }
+
+  editText = (e) => {
+    const tdListStored = JSON.parse(localStorage.getItem('ToDoList'));
+    if(e.key === "Enter") {
+      e.preventDefault();
+      console.log(e.target.innerText);
+      console.log(tdListStored[e.target.parentNode.id].description)
+      tdListStored[e.target.parentNode.id].description = e.target.innerText;
+      status.saveStorage();
+    }
+  }
+
+  removeLine = (e) => {
+    const tdListStored = JSON.parse(localStorage.getItem('ToDoList'));
+    const len = tdListStored.length;
+    const htmlItems = document.querySelectorAll('.td-item');
+    for (let i = 0; i < len; i += 1) {
+      if(htmlItems[i].id == tdListStored[e.target.parentNode.id].index) {
+        htmlItems[i].remove();
+      }
+    }
+    status.saveStorage();
+    window.location.reload();
   }
 }

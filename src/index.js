@@ -25,11 +25,18 @@ function loadLiEvents() {
     draggable.addEventListener('dragstart', () => {
       draggable.classList.add('dragging');
     });
-
+    
     draggable.addEventListener('dragend', () => {
       draggable.classList.remove('dragging');
     });
+    
+    draggable.addEventListener('keypress', addrm.editText);
   });
+  
+  const rmvLine = document.querySelectorAll('.delete-line');
+  rmvLine.forEach((rmv) => {
+    rmv.addEventListener('click', addrm.removeLine);
+  })
 
   document.addEventListener('dragover', drag.dragOver);
 
@@ -43,3 +50,4 @@ const inpt = document.getElementById('inpt');
 inpt.addEventListener('keypress', addrm.addToList);
 const rmvBtn = document.getElementById('remove-btn');
 rmvBtn.addEventListener('click', addrm.clearCompleted);
+

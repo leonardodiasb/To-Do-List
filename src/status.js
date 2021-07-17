@@ -1,3 +1,5 @@
+import DragDropSort from './drag.js';
+
 export default class Status {
   validation(e) {
     const tdList = JSON.parse(localStorage.getItem('ToDoList'));
@@ -33,17 +35,34 @@ export default class Status {
         list.insertAdjacentHTML('beforeend',
           `<div class="td-item" id="${tdList[i].index}" draggable="true">
                 <input type="checkbox" class="checkbox" checked="checked"/>
-                <p>${tdList[i].description}</p>
-                <i class="delete-line fas fa-ellipsis-v"></i>
+                <p contenteditable="true">${tdList[i].description}</p>
+                <i class="delete-line me-2 far fa-trash-alt" id="remove"></i>
+                <i class="drag-line fas fa-ellipsis-v"></i>
             </div>`);
       } else {
         list.insertAdjacentHTML('beforeend',
           `<div class="td-item" id="${tdList[i].index}" draggable="true">
                 <input type="checkbox" class="checkbox"/>
-                <p>${tdList[i].description}</p>
-                <i class="delete-line fas fa-ellipsis-v"></i>
+                <p contenteditable="true">${tdList[i].description}</p>
+                <i class="delete-line me-2 far fa-trash-alt" id="remove"></i>
+                <i class="drag-line fas fa-ellipsis-v"></i>
             </div>`);
       }
     }
+    const draggables = document.querySelectorAll('.td-item');
+      const drag = new DragDropSort();
+      draggables.forEach((draggable) => {
+        draggable.addEventListener('dragstart', () => {
+          draggable.classList.add('dragging');
+        });
+
+        draggable.addEventListener('dragend', () => {
+          draggable.classList.remove('dragging');
+        });
+      });
+
+      document.addEventListener('dragover', drag.dragOver);
+
+      document.addEventListener('drop', drag.dropSort);
   }
 }
