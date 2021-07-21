@@ -4,39 +4,45 @@ const status = new Status();
 
 export default class AddRm {
   addToList = () => {
-      const tdList = [];
-      const list = document.getElementById('td-section');
-      if (list.lastChild === null) {
-        tdList.push({
-          description: 'test',
-          completed: false,
-          index: 1,
-        });
-        list.insertAdjacentHTML('beforeend',
-          `<li class="td-item" id="${1}" draggable="true">
+    const tdList = [];
+    const list = document.getElementById('td-section');
+    if (list.lastChild === null) {
+      tdList.push({
+        description: 'test',
+        completed: false,
+        index: 1,
+      });
+      list.insertAdjacentHTML(
+        'beforeend',
+        `<li class="td-item" id="${1}" draggable="true">
                         <input type="checkbox" class="checkbox"/>
                         <p contenteditable="true">${'test'}</p>
                         <i class="delete-line me-2 far fa-trash-alt" id="remove"></i>
                         <i class="drag-line fas fa-ellipsis-v"></i>
-                    </li>`);
-      } else {
-        tdList.push({
-          description: 'test',
-          completed: false,
-          index: Number(list.lastChild.id) + 1,
-        });
-        list.insertAdjacentHTML('beforeend',
-          `<li class="td-item" id="${Number(list.lastChild.id) + 1}" draggable="true">
+                    </li>`,
+      );
+    } else {
+      tdList.push({
+        description: 'test',
+        completed: false,
+        index: Number(list.lastChild.id) + 1,
+      });
+      list.insertAdjacentHTML(
+        'beforeend',
+        `<li class="td-item" id="${
+          Number(list.lastChild.id) + 1
+        }" draggable="true">
                                         <input type="checkbox" class="checkbox"/>
                                         <p contenteditable="true">${'test'}</p>
                                         <i class="delete-line me-2 far fa-trash-alt" id="remove"></i>
                                         <i class="drag-line fas fa-ellipsis-v"></i>
-                                    </li>`);
-      }
-      this.loadLiEvents();
-    
+                                    </li>`,
+      );
+    }
+    this.loadLiEvents();
+
     status.saveStorage();
-  }
+  };
 
   clearCompleted = () => {
     const itemToRemove = document.querySelectorAll('.td-item');
@@ -53,7 +59,7 @@ export default class AddRm {
     localStorage.setItem('ToDoList', JSON.stringify(newList));
     status.populate();
     this.loadLiEvents();
-  }
+  };
 
   editText = (e) => {
     const tdListStored = JSON.parse(localStorage.getItem('ToDoList'));
@@ -62,9 +68,9 @@ export default class AddRm {
       tdListStored[e.target.parentNode.id - 1].description = e.target.innerText;
       status.saveStorage();
     }
-  }
+  };
 
-  removeLine = (e) => {
+  removeLine = () => {
     const tdListStored = JSON.parse(localStorage.getItem('ToDoList'));
     const len = tdListStored.length;
     const htmlItems = document.querySelectorAll('.td-item');
@@ -76,7 +82,7 @@ export default class AddRm {
     status.saveStorage();
     status.populate();
     this.loadLiEvents();
-  }
+  };
 
   loadLiEvents = () => {
     const draggables = document.querySelectorAll('.td-item');
@@ -96,5 +102,5 @@ export default class AddRm {
     rmvLine.forEach((rmv) => {
       rmv.addEventListener('click', this.removeLine);
     });
-  }
+  };
 }
