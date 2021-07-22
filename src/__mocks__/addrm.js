@@ -63,9 +63,9 @@ export default class AddRm {
 
   editText = () => {
     const tdListStored = JSON.parse(localStorage.getItem('ToDoList'));
-      tdListStored[0].description = 'new text';
-      localStorage.setItem('ToDoList', JSON.stringify(tdListStored));
-      status.populate();
+    tdListStored[0].description = 'new text';
+    localStorage.setItem('ToDoList', JSON.stringify(tdListStored));
+    status.populate();
   };
 
   removeLine = () => {
