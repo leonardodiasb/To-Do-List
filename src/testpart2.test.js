@@ -39,29 +39,52 @@ describe("'Completed' status test", () => {
   });
 });
 
-describe("'Completed' status test", () => {
-  test("test completed status", () => {
+describe("Drag test", () => {
+  test("drag test", () => {
+    const status = new Status();
     document.body.innerHTML = `<div>
             <ul id="td-section">
-              <div class="td-item" id='task-1' draggable="true">
-                          <input type="checkbox" class="checkbox"/>
+              <li class="td-item" id='task-1' draggable="true">
+                          <input type="checkbox" class="checkbox" checked/>
                           <p contenteditable="true">Walk the dog</p>
                           <i class="delete-line me-2 far fa-trash-alt"></i>
                           <i class="drag-line fas fa-ellipsis-v"></i>
-              </div>
-              <div class="td-item" id='task-2' draggable="true">
+              </li>
+              <li class="td-item" id='task-2' draggable="true">
                           <input type="checkbox" class="checkbox"/>
                           <p contenteditable="true">Wash dishes</p>
                           <i class="delete-line me-2 far fa-trash-alt"></i>
                           <i class="drag-line fas fa-ellipsis-v"></i>
-              </div>
-              <div class="td-item" id='task-3' draggable="true">
+              </li>
+              <li class="td-item" id='task-3' draggable="true">
                           <input type="checkbox" class="checkbox"/>
                           <p contenteditable="true">Cook the food</p>
                           <i class="delete-line me-2 far fa-trash-alt"></i>
                           <i class="drag-line fas fa-ellipsis-v"></i>
-              </div>
+              </li>
             </ul>
         </div>`;
+        status.saveStorage();
+        var localStorageArray = JSON.parse(localStorage.getItem("ToDoList"));
+        expect(localStorageArray[0].description).toBe('Walk the dog');
+        expect(localStorageArray[1].description).toBe('Wash dishes');
+        const dds = new DragDropSort();
+        dds.dragOver();
+        status.saveStorage();
+        var localStorageArray = JSON.parse(localStorage.getItem("ToDoList"));
+        expect(localStorageArray[0].description).toBe('Wash dishes');
+        expect(localStorageArray[1].description).toBe('Walk the dog');
+        console.log(localStorageArray);
   });
 });
+
+describe('Clear all completed test', () => {
+    test('Clear all completed test', () => {
+        const addrm = new AddRm();
+        var localStorageArray = JSON.parse(localStorage.getItem("ToDoList"));
+        expect(localStorageArray).toHaveLength(3);
+        addrm.clearCompleted();
+        var localStorageArray = JSON.parse(localStorage.getItem("ToDoList"));
+        expect(localStorageArray).toHaveLength(2);
+    })
+})

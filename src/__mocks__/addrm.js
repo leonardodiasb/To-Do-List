@@ -51,7 +51,7 @@ export default class AddRm {
     const newList = [];
     checked.forEach((element, index) => {
       newList.push({
-        description: checked[index].childNodes[3].innerText,
+        description: checked[index].childNodes[3].innerHTML,
         completed: false,
         index: index + 1,
       });

@@ -14,12 +14,12 @@ export default class AddRm {
           index: 1,
         });
         list.insertAdjacentHTML('beforeend',
-          `<div class="td-item" id="${1}" draggable="true">
+          `<li class="td-item" id="${1}" draggable="true">
                         <input type="checkbox" class="checkbox"/>
                         <p contenteditable="true">${event.target.value}</p>
                         <i class="delete-line me-2 far fa-trash-alt" id="remove"></i>
                         <i class="drag-line fas fa-ellipsis-v"></i>
-                    </div>`);
+                    </li>`);
       } else {
         tdList.push({
           description: event.target.value,
@@ -27,12 +27,12 @@ export default class AddRm {
           index: Number(list.lastChild.id) + 1,
         });
         list.insertAdjacentHTML('beforeend',
-          `<div class="td-item" id="${Number(list.lastChild.id) + 1}" draggable="true">
+          `<li class="td-item" id="${Number(list.lastChild.id) + 1}" draggable="true">
                                         <input type="checkbox" class="checkbox"/>
                                         <p contenteditable="true">${event.target.value}</p>
                                         <i class="delete-line me-2 far fa-trash-alt" id="remove"></i>
                                         <i class="drag-line fas fa-ellipsis-v"></i>
-                                    </div>`);
+                                    </li>`);
       }
       window.location.reload();
     }
