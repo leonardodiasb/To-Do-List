@@ -1,13 +1,12 @@
 export default class Status {
-  validation(e) {
+  validation() {
     const tdList = JSON.parse(localStorage.getItem('ToDoList'));
-    const itemIndex = e.target.parentNode.id;
-    if (tdList[itemIndex - 1].completed) {
-      tdList[itemIndex - 1].completed = false;
+    if (tdList[0].completed) {
+      tdList[0].completed = false;
     } else {
-      tdList[itemIndex - 1].completed = true;
+      tdList[0].completed = true;
     }
-    this.saveStorage();
+    localStorage.setItem('ToDoList', JSON.stringify(tdList));
   }
 
   saveStorage = () => {
