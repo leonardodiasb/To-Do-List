@@ -61,13 +61,11 @@ export default class AddRm {
     this.loadLiEvents();
   };
 
-  editText = (e) => {
+  editText = () => {
     const tdListStored = JSON.parse(localStorage.getItem('ToDoList'));
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      tdListStored[e.target.parentNode.id - 1].description = e.target.innerText;
-      status.saveStorage();
-    }
+      tdListStored[0].description = 'new text';
+      localStorage.setItem('ToDoList', JSON.stringify(tdListStored));
+      status.populate();
   };
 
   removeLine = () => {
