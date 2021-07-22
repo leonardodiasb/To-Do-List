@@ -30,20 +30,20 @@ export default class Status {
     for (let i = 0; i < tdList.length; i += 1) {
       if (tdList[i].completed) {
         list.insertAdjacentHTML('beforeend',
-          `<div class="td-item" id="${tdList[i].index}" draggable="true">
+          `<li class="td-item" id="${tdList[i].index}" draggable="true">
                 <input type="checkbox" class="checkbox" checked="checked"/>
                 <p contenteditable="true">${tdList[i].description}</p>
                 <i class="delete-line me-2 far fa-trash-alt" id="remove"></i>
                 <i class="drag-line fas fa-ellipsis-v"></i>
-            </div>`);
+            </li>`);
       } else {
         list.insertAdjacentHTML('beforeend',
-          `<div class="td-item" id="${tdList[i].index}" draggable="true">
+          `<li class="td-item" id="${tdList[i].index}" draggable="true">
                 <input type="checkbox" class="checkbox"/>
                 <p contenteditable="true">${tdList[i].description}</p>
                 <i class="delete-line me-2 far fa-trash-alt" id="remove"></i>
                 <i class="drag-line fas fa-ellipsis-v"></i>
-            </div>`);
+            </li>`);
       }
     }
   }

@@ -51,7 +51,7 @@ export default class AddRm {
     const newList = [];
     checked.forEach((element, index) => {
       newList.push({
-        description: checked[index].childNodes[3].innerText,
+        description: checked[index].childNodes[3].innerHTML,
         completed: false,
         index: index + 1,
       });
@@ -61,13 +61,11 @@ export default class AddRm {
     this.loadLiEvents();
   };
 
-  editText = (e) => {
+  editText = () => {
     const tdListStored = JSON.parse(localStorage.getItem('ToDoList'));
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      tdListStored[e.target.parentNode.id - 1].description = e.target.innerText;
-      status.saveStorage();
-    }
+    tdListStored[0].description = 'new text';
+    localStorage.setItem('ToDoList', JSON.stringify(tdListStored));
+    status.populate();
   };
 
   removeLine = () => {
